@@ -131,7 +131,7 @@ class _CountryListPickState extends State<CountryListPick> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Text(selectedItem.toCountryStringOnly(),
-                  style: TextStyle(color: Color(0xFF727C8E), fontSize: 22.0),),
+                  style: TextStyle(color: Color(0xFFA8ADB7), fontSize: 16.0),),
               ),
             ),
           if (widget.theme?.isDownIcon ?? true == true)
