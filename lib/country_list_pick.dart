@@ -58,7 +58,7 @@ class _CountryListPickState extends State<CountryListPick> {
       selectedItem = elements.firstWhere(
               (e) =>
           (e.code.toUpperCase() == widget.initialSelection.toUpperCase()) ||
-              (e.dialCode == widget.initialSelection),
+              (e.dialCode == widget.initialSelection) || (e.name == widget.initialSelection),
           orElse: () => elements[0] as CountryCode);
     } else {
       selectedItem = elements[0];
