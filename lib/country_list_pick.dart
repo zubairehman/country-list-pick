@@ -13,12 +13,14 @@ export 'country_selection_theme.dart';
 
 class CountryListPick extends StatefulWidget {
   CountryListPick({this.onChanged,
+    this.enabled,
     this.initialSelection,
     this.appBar,
     this.pickerBuilder,
     this.countryBuilder,
     this.theme});
 
+  final bool enabled;
   final String initialSelection;
   final ValueChanged<CountryCode> onChanged;
   final PreferredSizeWidget appBar;
@@ -100,7 +102,9 @@ class _CountryListPickState extends State<CountryListPick> {
     return InkWell(
       // padding: EdgeInsets.symmetric(horizontal: 0.0),
       onTap: () {
-        _awaitFromSelectScreen(context, widget.appBar, widget.theme);
+        if(widget.enabled) {
+          _awaitFromSelectScreen(context, widget.appBar, widget.theme);
+        }
       },
       child: widget.pickerBuilder != null
           ? widget.pickerBuilder(context, selectedItem)
