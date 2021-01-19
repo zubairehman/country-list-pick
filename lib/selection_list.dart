@@ -119,7 +119,7 @@ class _SelectionListState extends State<SelectionList> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text(widget.theme?.searchText ?? widget.localizedStrings['search_heading']),
+                          child: Text(widget.theme?.searchText ?? widget.localizedStrings['country_selection_search_heading']),
                         ),
                         Container(
                           color: Colors.white,
@@ -134,7 +134,7 @@ class _SelectionListState extends State<SelectionList> {
                               contentPadding: EdgeInsets.only(
                                   left: 15, bottom: 0, top: 0, right: 15),
                               hintText:
-                                  widget.theme?.searchHintText ?? widget.localizedStrings['search'],
+                                  widget.theme?.searchHintText ?? widget.localizedStrings['country_selection_search'],
                             ),
                             onChanged: _filterElements,
                           ),
@@ -142,7 +142,7 @@ class _SelectionListState extends State<SelectionList> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child:
-                              Text(widget.theme?.lastPickText ?? widget.localizedStrings['last_pick']),
+                              Text(widget.theme?.lastPickText ?? widget.localizedStrings['country_selection_last_pick']),
                         ),
                         Container(
                           color: Colors.white,
