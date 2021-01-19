@@ -1,22 +1,26 @@
 import 'dart:io';
 
-import 'package:country_list_pick/country_selection_theme.dart';
-import 'package:country_list_pick/support/code_country.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'country_list_pick.dart';
 
 class SelectionList extends StatefulWidget {
-  SelectionList(this.elements, this.initialSelection,
-      {Key key, this.appBar, this.theme, this.countryBuilder})
-      : super(key: key);
+  SelectionList(
+    this.elements,
+    this.initialSelection, {
+    Key key,
+    this.appBar,
+    this.theme,
+    this.countryBuilder, this.localizedStrings,
+  }) : super(key: key);
 
   final PreferredSizeWidget appBar;
   final List elements;
   final CountryCode initialSelection;
   final CountryTheme theme;
   final Widget Function(BuildContext context, CountryCode) countryBuilder;
+  final Map<String, String> localizedStrings;
 
   @override
   _SelectionListState createState() => _SelectionListState();
@@ -115,7 +119,7 @@ class _SelectionListState extends State<SelectionList> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text(widget.theme?.searchText ?? 'SEARCH'),
+                          child: Text(widget.theme?.searchText ?? widget.localizedStrings['search_heading']),
                         ),
                         Container(
                           color: Colors.white,
@@ -130,7 +134,7 @@ class _SelectionListState extends State<SelectionList> {
                               contentPadding: EdgeInsets.only(
                                   left: 15, bottom: 0, top: 0, right: 15),
                               hintText:
-                                  widget.theme?.searchHintText ?? "Search...",
+                                  widget.theme?.searchHintText ?? widget.localizedStrings['search'],
                             ),
                             onChanged: _filterElements,
                           ),
@@ -138,7 +142,7 @@ class _SelectionListState extends State<SelectionList> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child:
-                              Text(widget.theme?.lastPickText ?? 'LAST PICK'),
+                              Text(widget.theme?.lastPickText ?? widget.localizedStrings['last_pick']),
                         ),
                         Container(
                           color: Colors.white,
