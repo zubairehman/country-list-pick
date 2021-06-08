@@ -9,17 +9,17 @@ class SelectionList extends StatefulWidget {
   SelectionList(
     this.elements,
     this.initialSelection, {
-    Key key,
+    Key? key,
     this.appBar,
     this.theme,
     this.countryBuilder, this.localizedStrings,
   }) : super(key: key);
 
-  final PreferredSizeWidget appBar;
+  final PreferredSizeWidget? appBar;
   final List elements;
-  final CountryCode initialSelection;
+  final CountryCode? initialSelection;
   final CountryTheme theme;
-  final Widget Function(BuildContext context, CountryCode) countryBuilder;
+  final Widget Function(BuildContext context, CountryCode)? countryBuilder;
   final Map<String, String> localizedStrings;
 
   @override
@@ -27,9 +27,9 @@ class SelectionList extends StatefulWidget {
 }
 
 class _SelectionListState extends State<SelectionList> {
-  List countries;
+  late List countries;
   final TextEditingController _controller = TextEditingController();
-  ScrollController _controllerScroll;
+  ScrollController? _controllerScroll;
   var diff = 0.0;
 
   var posSelected = 0;
@@ -50,8 +50,7 @@ class _SelectionListState extends State<SelectionList> {
       return a.name.toString().compareTo(b.name.toString());
     });
     _controllerScroll = ScrollController();
-    //_controller.addListener(_scrollListener);
-    _controllerScroll.addListener(_scrollListener);
+    _controllerScroll!.addListener(_scrollListener);
     super.initState();
   }
 
@@ -59,34 +58,8 @@ class _SelectionListState extends State<SelectionList> {
     Navigator.pop(context, initialSelection);
   }
 
-  List _alphabet = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z'
-  ];
+  List _alphabet =
+      List.generate(26, (i) => String.fromCharCode('A'.codeUnitAt(0) + i));
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +68,7 @@ class _SelectionListState extends State<SelectionList> {
       statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarBrightness:
-          Platform.isAndroid ? Brightness.dark : Brightness.light,
+      statusBarBrightness: !kIsWeb ? Brightness.dark : Brightness.light,
     ));
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -150,11 +122,11 @@ class _SelectionListState extends State<SelectionList> {
                             color: Colors.transparent,
                             child: ListTile(
                               leading: Image.asset(
-                                widget.initialSelection.flagUri,
+                                widget.initialSelection.flagUri!,
                                 package: 'country_list_pick',
                                 width: 32.0,
                               ),
-                              title: Text(widget.initialSelection.name),
+                              title: Text(widget.initialSelection.name!),
                               trailing: Padding(
                                 padding: const EdgeInsets.only(right: 20.0),
                                 child: Icon(Icons.check, color: Colors.green),
@@ -169,7 +141,7 @@ class _SelectionListState extends State<SelectionList> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                       return widget.countryBuilder != null
-                          ? widget.countryBuilder(
+                          ? widget.countryBuilder!(
                               context, countries.elementAt(index))
                           : getListCountry(countries.elementAt(index));
                     }, childCount: countries.length),
@@ -210,11 +182,11 @@ class _SelectionListState extends State<SelectionList> {
         color: Colors.transparent,
         child: ListTile(
           leading: Image.asset(
-            e.flagUri,
+            e.flagUri!,
             package: 'country_list_pick',
             width: 30.0,
           ),
-          title: Text(e.name),
+          title: Text(e.name!),
           onTap: () {
             _sendDataBack(context, e);
           },
@@ -235,7 +207,7 @@ class _SelectionListState extends State<SelectionList> {
                 if (_text.toString().compareTo(
                         countries[i].name.toString().toUpperCase()[0]) ==
                     0) {
-                  _controllerScroll.jumpTo((i * _itemsizeheight) + 10);
+                  _controllerScroll!.jumpTo((i * _itemsizeheight) + 10);
                   break;
                 }
               }
@@ -299,7 +271,7 @@ class _SelectionListState extends State<SelectionList> {
                     .toString()
                     .compareTo(countries[i].name.toString().toUpperCase()[0]) ==
                 0) {
-              _controllerScroll.jumpTo((i * _itemsizeheight) + 15);
+              _controllerScroll!.jumpTo((i * _itemsizeheight) + 15);
               break;
             }
           }
@@ -317,17 +289,17 @@ class _SelectionListState extends State<SelectionList> {
     int scrollPosition =
         (_controllerScroll.position.pixels / _itemsizeheight).round();
     if (scrollPosition < countries.length) {
-      String countryName = countries.elementAt(scrollPosition).name;
+      String? countryName = countries.elementAt(scrollPosition).name;
       setState(() {
         posSelected =
-            countryName[0].toUpperCase().codeUnitAt(0) - 'A'.codeUnitAt(0);
+            countryName![0].toUpperCase().codeUnitAt(0) - 'A'.codeUnitAt(0);
       });
     }
 
-    if ((_controllerScroll.offset) >=
-        (_controllerScroll.position.maxScrollExtent)) {}
-    if (_controllerScroll.offset <=
-            _controllerScroll.position.minScrollExtent &&
-        !_controllerScroll.position.outOfRange) {}
+    if ((_controllerScroll!.offset) >=
+        (_controllerScroll!.position.maxScrollExtent)) {}
+    if (_controllerScroll!.offset <=
+            _controllerScroll!.position.minScrollExtent &&
+        !_controllerScroll!.position.outOfRange) {}
   }
 }
