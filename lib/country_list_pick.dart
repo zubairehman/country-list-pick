@@ -24,13 +24,13 @@ class CountryListPick extends StatefulWidget {
 
   final Map<String, String> localizedStrings;
   final bool enabled;
-  final String initialSelection;
-  final ValueChanged<CountryCode> onChanged;
-  final PreferredSizeWidget appBar;
-  final Widget Function(BuildContext context, CountryCode countryCode)
+  final String? initialSelection;
+  final ValueChanged<CountryCode>? onChanged;
+  final PreferredSizeWidget? appBar;
+  final Widget Function(BuildContext context, CountryCode? countryCode)?
       pickerBuilder;
-  final CountryTheme theme;
-  final Widget Function(BuildContext context, CountryCode countryCode)
+  final CountryTheme? theme;
+  final Widget Function(BuildContext context, CountryCode countryCode)?
       countryBuilder;
 
   @override
@@ -51,7 +51,7 @@ class CountryListPick extends StatefulWidget {
 }
 
 class _CountryListPickState extends State<CountryListPick> {
-  CountryCode selectedItem;
+  CountryCode? selectedItem;
   List elements = [];
 
   _CountryListPickState(this.elements);
@@ -61,7 +61,7 @@ class _CountryListPickState extends State<CountryListPick> {
     if (widget.initialSelection != null) {
       selectedItem = elements.firstWhere(
           (e) =>
-              (e.code.toUpperCase() == widget.initialSelection.toUpperCase()) ||
+              (e.code.toUpperCase() == widget.initialSelection!.toUpperCase()) ||
               (e.dialCode == widget.initialSelection) ||
               (e.name == widget.initialSelection),
           orElse: () => elements[0] as CountryCode);
@@ -72,8 +72,8 @@ class _CountryListPickState extends State<CountryListPick> {
     super.initState();
   }
 
-  void _awaitFromSelectScreen(BuildContext context, PreferredSizeWidget appBar,
-      CountryTheme theme) async {
+  void _awaitFromSelectScreen(BuildContext context, PreferredSizeWidget? appBar,
+      CountryTheme? theme) async {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -107,7 +107,7 @@ class _CountryListPickState extends State<CountryListPick> {
         }
       },
       child: widget.pickerBuilder != null
-          ? widget.pickerBuilder(context, selectedItem)
+          ? widget.pickerBuilder!(context, selectedItem)
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
@@ -117,7 +117,7 @@ class _CountryListPickState extends State<CountryListPick> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Image.asset(
-                        selectedItem.flagUri,
+                        selectedItem!.flagUri!,
                         package: 'country_list_pick',
                         width: 22.0,
                       ),
