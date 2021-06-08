@@ -22,8 +22,8 @@ class CountryListPick extends StatefulWidget {
     this.localizedStrings,
   });
 
-  final Map<String, String> localizedStrings;
-  final bool enabled;
+  final Map<String, String>? localizedStrings;
+  final bool? enabled;
   final String? initialSelection;
   final ValueChanged<CountryCode>? onChanged;
   final PreferredSizeWidget? appBar;
@@ -80,20 +80,20 @@ class _CountryListPickState extends State<CountryListPick> {
           builder: (context) => SelectionList(
             elements,
             selectedItem,
-            localizedStrings: widget.localizedStrings,
+            localizedStrings: widget.localizedStrings!,
             appBar: widget.appBar ??
                 AppBar(
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  title: Text(widget.localizedStrings['country_selection_select_country']),
+                  title: Text(widget.localizedStrings!['country_selection_select_country']!),
                 ),
-            theme: theme,
+            theme: theme!,
             countryBuilder: widget.countryBuilder,
           ),
         ));
 
     setState(() {
       selectedItem = result ?? selectedItem;
-      widget.onChanged(result ?? selectedItem);
+      widget.onChanged!(result ?? selectedItem);
     });
   }
 
@@ -102,7 +102,7 @@ class _CountryListPickState extends State<CountryListPick> {
     return InkWell(
       // padding: EdgeInsets.symmetric(horizontal: 0.0),
       onTap: () {
-        if (widget.enabled) {
+        if (widget.enabled!) {
           _awaitFromSelectScreen(context, widget.appBar, widget.theme);
         }
       },
@@ -135,7 +135,7 @@ class _CountryListPickState extends State<CountryListPick> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Text(
-                        selectedItem.toCountryStringOnly().toUpperCase(),
+                        selectedItem!.toCountryStringOnly().toUpperCase(),
                         style: TextStyle(
                             color: Color(0xFFA8ADB7),
                             fontSize: 14.0,

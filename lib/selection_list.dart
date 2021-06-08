@@ -1,5 +1,5 @@
-import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,9 +18,9 @@ class SelectionList extends StatefulWidget {
   final PreferredSizeWidget? appBar;
   final List elements;
   final CountryCode? initialSelection;
-  final CountryTheme theme;
+  final CountryTheme? theme;
   final Widget Function(BuildContext context, CountryCode)? countryBuilder;
-  final Map<String, String> localizedStrings;
+  final Map<String, String>? localizedStrings;
 
   @override
   _SelectionListState createState() => _SelectionListState();
@@ -91,7 +91,7 @@ class _SelectionListState extends State<SelectionList> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text(widget.theme?.searchText ?? widget.localizedStrings['country_selection_search_heading']),
+                          child: Text(widget.theme?.searchText ?? widget.localizedStrings!['country_selection_search_heading']!),
                         ),
                         Container(
                           color: Colors.white,
@@ -106,7 +106,7 @@ class _SelectionListState extends State<SelectionList> {
                               contentPadding: EdgeInsets.only(
                                   left: 15, bottom: 0, top: 0, right: 15),
                               hintText:
-                                  widget.theme?.searchHintText ?? widget.localizedStrings['country_selection_search'],
+                                  widget.theme?.searchHintText ?? widget.localizedStrings!['country_selection_search'],
                             ),
                             onChanged: _filterElements,
                           ),
@@ -114,7 +114,7 @@ class _SelectionListState extends State<SelectionList> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child:
-                              Text(widget.theme?.lastPickText ?? widget.localizedStrings['country_selection_last_pick']),
+                              Text(widget.theme?.lastPickText ?? widget.localizedStrings!['country_selection_last_pick']!),
                         ),
                         Container(
                           color: Colors.white,
@@ -122,11 +122,11 @@ class _SelectionListState extends State<SelectionList> {
                             color: Colors.transparent,
                             child: ListTile(
                               leading: Image.asset(
-                                widget.initialSelection.flagUri!,
+                                widget.initialSelection!.flagUri!,
                                 package: 'country_list_pick',
                                 width: 32.0,
                               ),
-                              title: Text(widget.initialSelection.name!),
+                              title: Text(widget.initialSelection!.name!),
                               trailing: Padding(
                                 padding: const EdgeInsets.only(right: 20.0),
                                 child: Icon(Icons.check, color: Colors.green),
@@ -287,7 +287,7 @@ class _SelectionListState extends State<SelectionList> {
 
   _scrollListener() {
     int scrollPosition =
-        (_controllerScroll.position.pixels / _itemsizeheight).round();
+        (_controllerScroll!.position.pixels / _itemsizeheight).round();
     if (scrollPosition < countries.length) {
       String? countryName = countries.elementAt(scrollPosition).name;
       setState(() {
